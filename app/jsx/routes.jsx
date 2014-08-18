@@ -4,8 +4,8 @@ React.renderComponent((
     <Route name="app" path="/" handler={App}>
       <Route name="photos" path="/photos" handler={PhotosIndex} />
       <Route name="photo" path="/photos/:id" handler={PhotoShow} />
-      <Route name="sets_index" path="/sets" handler={SetsIndex} />
-      <Route name="new_set" path="/sets/new" handler={NewSet} />
+      <Route name="stories_index" path="/stories" handler={StoriesIndex} />
+      <Route name="new_story" path="/stories/new" handler={NewStory} />
       <DefaultRoute handler={Home} />
     </Route>
   </Routes>

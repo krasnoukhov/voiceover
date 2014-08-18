@@ -19,15 +19,15 @@ var PhotosIndex = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <Loader loaded={this.state.loaded}>
+      <section className="col-md-8 photos">
+        <Loader loaded={this.state.loaded} color="#fff">
           {this.state.items.map(function(item) {
             return (
               <Photo key={item.id} item={item} />
             )
           }.bind(this))}
         </Loader>
-      </div>
+      </section>
     );
   }
 });
@@ -48,9 +48,11 @@ var Photo = React.createClass({
   },
 
   render: function() {
+    var src = "http://theoldreader.com/kittens/200/150?"+Math.random().toString();
+
     return (
       <div>
-        PHOTO
+        <img src={src} />
       </div>
     );
   }

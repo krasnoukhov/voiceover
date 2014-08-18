@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-var SetsIndex = React.createClass({
+var StoriesIndex = React.createClass({
   render: function() {
     return (
       <div>
@@ -9,7 +9,7 @@ var SetsIndex = React.createClass({
   }
 });
 
-var NewSet = React.createClass({
+var NewStory = React.createClass({
   render: function() {
     return (
       <div>

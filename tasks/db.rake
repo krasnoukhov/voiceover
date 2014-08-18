@@ -8,7 +8,7 @@ namespace :db do
       String      :title
     end
 
-    %w(1 2 3).each do |title|
+    (1..12).each do |title|
       entity = VoiceOver::Photo.new(title: title)
       VoiceOver::PhotoRepository.create(entity)
     end

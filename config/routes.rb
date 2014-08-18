@@ -1,7 +1,7 @@
 get "/",            to: "home#index", as: :root
-get "/sets",        to: "home#index"
-get "/sets/:id",    to: "home#index"
-get "/sets/new",    to: "home#index"
+get "/stories",     to: "home#index"
+get "/stories/:id", to: "home#index"
+get "/stories/new", to: "home#index"
 get "/photos",      to: "home#index"
 get "/photos/:id",  to: "home#index"
 
