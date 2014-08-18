@@ -1,0 +1,6 @@
+bundle
+coverage
+db
+log
+public/js
+tmp
