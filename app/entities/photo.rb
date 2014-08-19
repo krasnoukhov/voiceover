@@ -1,4 +1,4 @@
 class VoiceOver::Photo
   include Lotus::Entity
-  self.attributes = :title
+  self.attributes = :basename, :title
 end

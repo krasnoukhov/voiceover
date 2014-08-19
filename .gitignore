@@ -3,4 +3,5 @@ coverage
 db
 log
 public/js
+public/static
 tmp

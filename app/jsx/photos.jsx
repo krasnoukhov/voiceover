@@ -24,8 +24,9 @@ var PhotosIndex = React.createClass({
           <ul className="list-unstyled row">
           {this.state.items.map(function(item) {
             return (
-              <li key={item.id} className="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+              <li key={item.id} className="col-xs-6 col-sm-4 col-md-4">
                 <Photo item={item} />
+                <p class="text-muted">{item.title}</p>
               </li>
             )
           }.bind(this))}
@@ -52,9 +53,8 @@ var Photo = React.createClass({
   },
 
   render: function() {
-    var src = "http://theoldreader.com/kittens/260/170?"+Math.random().toString();
     var style = {
-      "background-image": "url(" + src + ")"
+      "background-image": "url(/static/thumbnail/" + this.props.item.basename + ")"
     };
 
     return (

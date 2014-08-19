@@ -43,8 +43,13 @@ section {
 
 section.photos li a {
   display: block;
-  max-width: 260px;
-  margin: 0 auto 15px auto;
+  margin: 0 auto 0 auto;
   padding: 0 0 66% 0;
   background: none no-repeat center center;
+  background-size: 100% 100%;
+}
+
+section.photos li p {
+  margin: 5px 0 30px 0;
+  font-size: 85%;
 }
