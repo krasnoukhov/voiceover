@@ -2,7 +2,8 @@ aside h1 {
   padding: 0;
   margin: 50px 0 30px 0;
   text-transform: uppercase;
-  font-size: 50px;
+  font-size: 45px;
+  font-family: 'Ropa Sans', sans-serif;
 }
 
 aside h1 a, aside h1 a:hover{
@@ -15,9 +16,8 @@ aside h1 label {
 }
 
 aside p {
-  font-size: 95%;
+  font-size: 90%;
 }
-
 
 aside .links {
   margin: 50px auto 0 auto;
@@ -27,14 +27,24 @@ aside .links {
 
 aside .links h2 {
   text-transform: uppercase;
-  font-size: 26px;
+  font-size: 32px;
+  font-family: 'Ropa Sans', sans-serif;
 }
 
 section {
-  margin-top: 140px;
+  margin-top: 50px;
 }
 
-section.photos img {
-  float: left;
-  margin: 0 10px 10px 0;
+@media (min-width: 992px) {
+  section {
+    margin-top: 140px;
+  }
+}
+
+section.photos li a {
+  display: block;
+  max-width: 260px;
+  margin: 0 auto 15px auto;
+  padding: 0 0 66% 0;
+  background: none no-repeat center center;
 }

@@ -2,7 +2,7 @@
 var Home = React.createClass({
   render: function() {
     return (
-      <section className="col-md-8">
+      <section className="col-md-9">
         HOME
       </section>
     );

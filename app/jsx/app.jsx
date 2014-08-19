@@ -14,7 +14,7 @@ var App = React.createClass({
     }
 
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <Sidebar />
           <this.props.activeRouteHandler />
@@ -27,14 +27,13 @@ var App = React.createClass({
 var Sidebar = React.createClass({
   render: function() {
     return (
-      <aside className="col-md-4">
+      <aside className="col-md-3">
         <h1><Link to="app">Voice<label>-</label>over</Link></h1>
 
-        <p>Voice-Over is Emine Gozde Sevim's interactive installation that employs the photographs from Palestine-Israel Sevim made in 2010.</p>
-        <p>By using an online and offline platform, with this installation, Sevim invites her audience to create their own narratives through making their own selection and sequencing of the  defined set of photographs from her body of work on a web platform.</p>
-        <p>For the platform, Sevim will provide 75 photographs for her audience to select and order and will ask them to add a short abstract describing the attempt of the selected photographs and the order.</p>
-        <p>To track the participant demographics, the users will be asked to provide basic information about themselves in order to add their own version of a contact sheet to the collective archive. The on-going platform will be provided for Arabic, Hebrew,Turkish and English speakers and will be available in English viewing for a general international audience.</p>
-        <p>Tackling this most contested subject matter about the Middle-East with such approach and with such platform that will outlive the physical installation at DEPO (Istanbul) in the fall of 2014, Sevim aims to expose the parallel complexity of (visual) story-telling and of the dynamic (re)writing of history and underline the power of images and the new meaning they gain (through the specific place) in the creation of a visual narrative, emphasizing intangibility of the process by which we create our own memory of the given subject matter.</p>
+        <p>In 2010, I traveled to Israel and the West Bank as part of my on-going curiosity about the Middle-East. It seemed natural to see the situation first hand for anyone who wanted to come a step closer to understanding the Middle-East.</p>
+        <p>During the one-month I was able to spend there, the perplex situation left me with more questions than answers. We can describe the atrocities impacting lives on the both sides, we can speak of the sides. However, for me, despite that I had more access to "one side" rather than "the other", the complexities I've witnessed proved this is a human rights issue, a universal matter that is often explained through differences and numbers. If, in fact we move beyond the numbers, no winners will be left of this on-going violence.</p>
+        <p>As years pass and the story proves a continuous repetition, I began to question the role of images in creating the narrative of this history.</p>
+        <p>Hence, came the idea for "Voice-Over" to transform this experience beyond my own into a dialogue.</p>
 
         <div className="links">
           <h2><Link to="photos">See the photos</Link></h2>

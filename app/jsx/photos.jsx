@@ -19,13 +19,17 @@ var PhotosIndex = React.createClass({
 
   render: function() {
     return (
-      <section className="col-md-8 photos">
+      <section className="col-md-9 photos">
         <Loader loaded={this.state.loaded} color="#fff">
+          <ul className="list-unstyled row">
           {this.state.items.map(function(item) {
             return (
-              <Photo key={item.id} item={item} />
+              <li key={item.id} className="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                <Photo item={item} />
+              </li>
             )
           }.bind(this))}
+          </ul>
         </Loader>
       </section>
     );
@@ -48,12 +52,13 @@ var Photo = React.createClass({
   },
 
   render: function() {
-    var src = "http://theoldreader.com/kittens/200/150?"+Math.random().toString();
+    var src = "http://theoldreader.com/kittens/260/170?"+Math.random().toString();
+    var style = {
+      "background-image": "url(" + src + ")"
+    };
 
     return (
-      <div>
-        <img src={src} />
-      </div>
+      <Link to="photo" id={this.props.item.id} style={style}></Link>
     );
   }
 });
