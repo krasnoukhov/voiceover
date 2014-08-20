@@ -56,6 +56,7 @@ section.photos li div{
   background: none no-repeat center center;
   background-size: 100% 100%;
   font-size: 1px;
+  cursor: pointer;
 }
 
 section.photos li p {
