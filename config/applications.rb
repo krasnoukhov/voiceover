@@ -5,6 +5,11 @@ Bundler.require(:default, APP_ENV)
 
 module VoiceOver
   DATABASE = "sqlite://db/voiceover.db"
+  VERSION = begin
+    Dir.entries("/home/voiceover/www/releases").sort.last
+  rescue Errno::ENOENT
+    "1"
+  end
 
   class Application < Lotus::Application
     configure do
