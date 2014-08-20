@@ -81,6 +81,10 @@ section .fotorama .fotorama__html > div {
   font-size: 1px;
 }
 
+section.photos {
+  min-height: 57px;
+}
+
 section.new-story .photos {
   padding: 0;
 }
