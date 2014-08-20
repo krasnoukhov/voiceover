@@ -135,3 +135,10 @@ section.new-story .grid li p {
 section.new-story .ready {
   border-style: solid;
 }
+
+section.new-story .btn.add-story {
+  position: absolute;
+  top: 65px;
+  right: 15px;
+}
+}

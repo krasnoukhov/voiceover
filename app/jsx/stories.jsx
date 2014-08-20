@@ -1,5 +1,17 @@
 /** @jsx React.DOM */
+var PHOTOS_LIMIT = 36;
+
 var NewStory = React.createClass({
+  getInitialState: function () {
+    return { step: 0, items: [], person: {} };
+  },
+
+  destinationItems: function() {
+    return $.map($(".destination li div"), function(x) {
+      return parseInt($(x).attr("data-photoid"))
+    });
+  },
+
   onPhotosUpdate: function() {
     this.updateDestination();
     $("section ul").sortable({
@@ -8,8 +20,13 @@ var NewStory = React.createClass({
         ui.placeholder.height(ui.item.outerHeight());
         $(".destination .sample").remove();
         $(".destination").addClass("ready");
-      },
+      }.bind(this),
       stop: function(evt, ui) {
+        this.setState({ "items": this.destinationItems() })
+        if(this.state.items.length > PHOTOS_LIMIT) {
+          return false;
+        }
+
         this.updateDestination();
         $(".destination").removeClass("ready");
       }.bind(this)
@@ -20,17 +37,51 @@ var NewStory = React.createClass({
     $(".destination").css("minHeight", $(".grid:first").outerHeight());
   },
 
-  componentDidMount: function() {
+  nextStep: function() {
+    this.setState({ step: this.state.step + 1 })
+    console.log(this.state.step);
+  },
+
+  componentDidUpdate: function() {
     $("section ul").sortable({
       connectWith: "section ul"
     }).disableSelection();
   },
 
   render: function() {
+    var nextButton;
+    if(this.state.items.length > 0) {
+      var classNames = "btn btn-primary add-story";
+      // TODO: form
+      if(this.state.step == 1 && true) {
+        classNames += " disabled";
+      }
+
+      nextButton = (
+        <button className={classNames} onClick={this.nextStep}>Add story</button>
+      )
+    }
+
+    var leftContent;
+    if(this.state.step == 1) {
+      leftContent = (
+        <form>
+          OMG<br />
+          {this.state.items}
+        </form>
+      )
+    } else {
+      leftContent = (
+        <PhotosIndex classNames="col-md-12" onUpdate={this.onPhotosUpdate} />
+      )
+    }
+
     return (
       <section className="row new-story">
+        {nextButton}
+
         <div className="col-xs-6">
-          <PhotosIndex classNames="col-md-12" onUpdate={this.onPhotosUpdate} />
+          {leftContent}
         </div>
 
         <div className="col-xs-6">

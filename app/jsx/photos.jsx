@@ -127,7 +127,7 @@ var PhotoWidget = React.createClass({
     };
 
     return (
-      <div style={style} id={this.id()} data-thumb={thumb} onClick={this.click}>-</div>
+      <div style={style} id={this.id()} data-photoid={this.props.item.id} data-thumb={thumb} onClick={this.click}>-</div>
     );
   }
 });
