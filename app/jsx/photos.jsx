@@ -1,5 +1,10 @@
 /** @jsx React.DOM */
 var PhotosIndex = React.createClass({
+  propTypes: {
+    classNames: React.PropTypes.string,
+    onUpdate: React.PropTypes.func,
+  },
+
   getInitialState: function () {
     return { loaded: false, items: [] };
   },
@@ -17,46 +22,67 @@ var PhotosIndex = React.createClass({
     })
   },
 
-  render: function() {
-    return (
-      <div>
-        <section className="col-md-9 photos">
-          <Loader loaded={this.state.loaded} color="#fff">
-            <ul className="list-unstyled row">
-            {this.state.items.map(function(item) {
-              return (
-                <li key={item.id} className="col-xs-6 col-sm-4 col-md-4 col-lg-3">
-                  <Photo type="thumbnail" item={item} />
-                  <p className="text-muted">{item.title}</p>
-                </li>
-              )
-            }.bind(this))}
-            </ul>
-          </Loader>
-        </section>
-        <section className="fotorama" data-auto="false">
-        {this.state.items.map(function(item) {
-          return (
-            <Photo key={item.id} type="original" item={item} />
-          )
-        }.bind(this))}
-        </section>
-      </div>
-    );
-  }
-});
+  componentDidUpdate: function() {
+    if(this.props.onUpdate) {
+      this.props.onUpdate();
+    }
+  },
 
-var PhotoShow = React.createClass({
   render: function() {
+    var classNames = "photos " + (this.props.classNames || "col-md-9");
+
     return (
-      <section className="col-md-9 photo">
-        PHOTO
+      <section className={classNames}>
+        <PhotosWidget loaded={this.state.loaded} items={this.state.items} />
+        <FotoramaWidget items={this.state.items} />
       </section>
     );
   }
 });
 
-var Photo = React.createClass({
+var PhotosWidget = React.createClass({
+  propTypes: {
+    loaded: React.PropTypes.bool.isRequired,
+    items: React.PropTypes.array.isRequired
+  },
+
+  render: function() {
+    return (
+      <Loader loaded={this.props.loaded} color="#fff">
+        <ul className="list-unstyled row grid">
+        {this.props.items.map(function(item) {
+          return (
+            <li key={item.id} className="col-sm-4 col-md-4 col-lg-3">
+              <PhotoWidget type="thumbnail" item={item} />
+              <p className="text-muted">{item.title}</p>
+            </li>
+          )
+        }.bind(this))}
+        </ul>
+      </Loader>
+    )
+  }
+});
+
+var FotoramaWidget = React.createClass({
+  propTypes: {
+    items: React.PropTypes.array.isRequired
+  },
+
+  render: function() {
+    return (
+      <div className="fotorama" data-auto="false">
+      {this.props.items.map(function(item) {
+        return (
+          <PhotoWidget key={item.id} type="original" item={item} />
+        )
+      }.bind(this))}
+      </div>
+    )
+  }
+});
+
+var PhotoWidget = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
     type: React.PropTypes.string.isRequired
@@ -74,7 +100,6 @@ var Photo = React.createClass({
       keyboard: true
     });
     $(".fotorama").data("fotorama").show(this.id());
-
     $(document).bind("keydown", this.keydown);
   },
 
@@ -86,7 +111,6 @@ var Photo = React.createClass({
 
   componentWillUnmount: function() {
     $(document).unbind("keydown", this.keydown);
-    $(".fotorama").data("fotorama").destroy();
   },
 
   render: function() {

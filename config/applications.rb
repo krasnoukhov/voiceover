@@ -8,7 +8,7 @@ module VoiceOver
   VERSION = begin
     Dir.entries("/home/voiceover/www/releases").map(&:to_i).sort.last
   rescue Errno::ENOENT
-    "1"
+    rand
   end
 
   class Application < Lotus::Application
