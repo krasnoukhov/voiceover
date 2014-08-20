@@ -43,9 +43,9 @@ section.fotorama {
 
 section.fotorama .fotorama__html > div {
   width: 100%;
-  padding: 0 0 66% 0;
+  height: 100%;
   background: none no-repeat center center;
-  background-size: 100% 100%;
+  background-size: contain;
   font-size: 1px;
 }
 
