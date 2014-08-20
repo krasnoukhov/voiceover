@@ -6,7 +6,7 @@ Bundler.require(:default, APP_ENV)
 module VoiceOver
   DATABASE = "sqlite://db/voiceover.db"
   VERSION = begin
-    Dir.entries("/home/voiceover/www/releases").sort.last
+    Dir.entries("/home/voiceover/www/releases").map(&:to_i).sort.last
   rescue Errno::ENOENT
     "1"
   end
