@@ -40,9 +40,9 @@ var PhotosIndex = React.createClass({
 var PhotoShow = React.createClass({
   render: function() {
     return (
-      <div>
+      <section className="col-md-9 photo">
         PHOTO
-      </div>
+      </section>
     );
   }
 });

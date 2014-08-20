@@ -1,20 +1,26 @@
 /** @jsx React.DOM */
-var StoriesIndex = React.createClass({
+var NewStory = React.createClass({
   render: function() {
     return (
-      <div>
-        SETS
+      <div className="row">
+        <div className="col-md-6">
+          Source
+        </div>
+
+        <div className="col-md-6">
+          Destination
+        </div>
       </div>
     );
   }
 });
 
-var NewStory = React.createClass({
+var StoryShow = React.createClass({
   render: function() {
     return (
-      <div>
-        NEW SET
-      </div>
+      <section className="col-md-9 story">
+        STORY
+      </section>
     );
   }
 });
