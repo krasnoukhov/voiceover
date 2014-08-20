@@ -33,6 +33,7 @@ var PhotosIndex = React.createClass({
 
     return (
       <section className={classNames}>
+        <button type="button" className="hidden close"><span aria-hidden="true">{'\u00d7'}</span><span className="sr-only">Close</span></button>
         <PhotosWidget loaded={this.state.loaded} items={this.state.items} />
         <FotoramaWidget items={this.state.items} />
       </section>
@@ -93,6 +94,7 @@ var PhotoWidget = React.createClass({
   },
 
   click: function() {
+    $(".photos .close").removeClass("hidden").bind("click", this.hideFotorama);
     $(".fotorama").show().fotorama({
       width: "100%",
       height: "100%",
@@ -105,8 +107,13 @@ var PhotoWidget = React.createClass({
 
   keydown: function(evt) {
     if(evt.keyCode == 27) {
-      $(".fotorama").hide();
+      this.hideFotorama();
     }
+  },
+
+  hideFotorama: function() {
+    $(".photos .close").addClass("hidden");
+    $(".fotorama").hide();
   },
 
   componentWillUnmount: function() {

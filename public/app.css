@@ -85,6 +85,17 @@ section.photos {
   min-height: 57px;
 }
 
+section.photos .close {
+  position: fixed;
+  z-index: 10;
+  right: 10px;
+  top: 10px;
+}
+
+section.photos .close span {
+  font-size: 24px;
+}
+
 section.new-story .photos {
   padding: 0;
 }
