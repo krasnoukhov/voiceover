@@ -24,7 +24,7 @@ var PhotosIndex = React.createClass({
           <ul className="list-unstyled row">
           {this.state.items.map(function(item) {
             return (
-              <li key={item.id} className="col-xs-6 col-sm-4 col-md-4">
+              <li key={item.id} className="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                 <Photo item={item} />
                 <p class="text-muted">{item.title}</p>
               </li>
