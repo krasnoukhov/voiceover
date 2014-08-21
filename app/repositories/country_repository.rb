@@ -1,3 +1,5 @@
+require "./app/entities/country"
+
 class VoiceOver::CountryRepository
   include Lotus::Repository
 
