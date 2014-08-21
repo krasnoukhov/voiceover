@@ -37,9 +37,32 @@ var NewStory = React.createClass({
     $(".destination").css("minHeight", $(".grid:first").outerHeight());
   },
 
-  nextStep: function() {
-    this.setState({ step: this.state.step + 1 })
-    console.log(this.state.step);
+  stepForward: function() {
+    if(this.state.step >= 2) {
+      this.lastStep();
+    } else {
+      this.setState({ step: this.state.step + 1 });
+    }
+  },
+
+  stepBack: function() {
+    this.setState({ step: this.state.step - 1 });
+  },
+
+  lastStep: function() {
+    alert("Request goes to backend");
+  },
+
+  inputChange: function() {
+    var formFilled = $("form").serializeArray().map(function(x) {
+      return x["value"] == "";
+    }).indexOf(true) === -1;
+
+    if(formFilled && this.state.step == 1) {
+      this.stepForward();
+    }else if(!formFilled && this.state.step == 2) {
+      this.stepBack();
+    }
   },
 
   componentDidUpdate: function() {
@@ -52,22 +75,54 @@ var NewStory = React.createClass({
     var nextButton;
     if(this.state.items.length > 0) {
       var classNames = "btn btn-primary add-story";
-      // TODO: form
-      if(this.state.step == 1 && true) {
+      var buttonText = "Next";
+
+      if(this.state.step == 1) {
         classNames += " disabled";
+        buttonText = "Add story";
+      }else if(this.state.step == 2) {
+        buttonText = "Add story";
       }
 
       nextButton = (
-        <button className={classNames} onClick={this.nextStep}>Add story</button>
+        <button className={classNames} onClick={this.stepForward}>{buttonText}</button>
       )
     }
 
     var leftContent;
-    if(this.state.step == 1) {
+    if(this.state.step >= 1) {
       leftContent = (
-        <form>
-          OMG<br />
-          {this.state.items}
+        <form className="form-horizontal" role="form">
+          <div className="form-group">
+            <label htmlFor="personName" className="col-sm-2 control-label">Email</label>
+            <div className="col-sm-10">
+              <input onChange={this.inputChange} type="text" className="form-control" id="personName" name="person[name]" />
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="personAge" className="col-sm-2 control-label">Age</label>
+            <div className="col-sm-10">
+              <input onChange={this.inputChange} type="number" className="form-control" id="personAge" name="person[age]" />
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="personCountry" className="col-sm-2 control-label">Country</label>
+            <div className="col-sm-10">
+              <select onChange={this.inputChange} className="form-control" id="personCountry" name="person[country]">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="personDescription" className="col-sm-2 control-label">Description</label>
+            <div className="col-sm-10">
+              <textarea onChange={this.inputChange} className="form-control" id="personDescription" name="person[description]" rows="10" />
+            </div>
+          </div>
         </form>
       )
     } else {
