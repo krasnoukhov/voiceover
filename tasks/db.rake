@@ -13,5 +13,14 @@ namespace :db do
       entity = VoiceOver::Photo.new(basename: File.basename(path), title: path)
       VoiceOver::PhotoRepository.create(entity)
     end
+
+    DB.create_table :stories do
+      primary_key :id
+      String      :name
+      Integer     :age
+      String      :country
+      String      :description
+      String      :photo_ids
+    end
   end
 end

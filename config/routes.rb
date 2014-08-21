@@ -5,4 +5,6 @@ get "/stories/:id", to: "home#index"
 
 namespace "api" do
   resources "photos"
+  resources "countries"
+  resources "stories"
 end

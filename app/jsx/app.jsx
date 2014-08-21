@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
-var Routes = ReactRouter.Routes,
-    Route = ReactRouter.Route,
-    DefaultRoute = ReactRouter.Route,
-    Link = ReactRouter.Link,
-    ActiveState = ReactRouter.ActiveState;
+var Router = ReactRouter,
+    Routes = Router.Routes,
+    Route = Router.Route,
+    DefaultRoute = Router.Route,
+    Link = Router.Link,
+    ActiveState = Router.ActiveState;
 
 var App = React.createClass({
   render: function() {

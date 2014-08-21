@@ -3,7 +3,7 @@ var PHOTOS_LIMIT = 36;
 
 var NewStory = React.createClass({
   getInitialState: function () {
-    return { step: 0, items: [], person: {} };
+    return { step: 0, items: [], countries: [] };
   },
 
   destinationItems: function() {
@@ -51,7 +51,18 @@ var NewStory = React.createClass({
   },
 
   lastStep: function() {
-    alert("Request goes to backend");
+    $.ajax({
+      url: "/api/stories",
+      dataType: "json",
+      method: "POST",
+      data: $("form").serialize() + "&story[photo_ids]=" + this.destinationItems().join(","),
+      success: function(data) {
+        Router.transitionTo("story", { "id": data.id })
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("XHR failed")
+      }.bind(this)
+    })
   },
 
   inputChange: function() {
@@ -64,6 +75,19 @@ var NewStory = React.createClass({
     }else if(!formFilled && this.state.step == 2) {
       this.stepBack();
     }
+  },
+
+  componentDidMount: function () {
+    $.ajax({
+      url: "/api/countries",
+      dataType: "json",
+      success: function(data) {
+        this.setState({ countries: data })
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("XHR failed")
+      }.bind(this)
+    });
   },
 
   componentDidUpdate: function() {
@@ -106,33 +130,34 @@ var NewStory = React.createClass({
       formContent = (
         <form className="form-horizontal" role="form">
           <div className="form-group">
-            <label htmlFor="personName" className="col-sm-2 control-label">Email</label>
+            <label htmlFor="personName" className="col-sm-2 control-label">Name</label>
             <div className="col-sm-10">
-              <input onChange={this.inputChange} type="text" className="form-control" id="personName" name="person[name]" />
+              <input onChange={this.inputChange} type="text" className="form-control" id="personName" name="story[name]" />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="personAge" className="col-sm-2 control-label">Age</label>
             <div className="col-sm-10">
-              <input onChange={this.inputChange} type="number" className="form-control" id="personAge" name="person[age]" />
+              <input onChange={this.inputChange} type="number" className="form-control" id="personAge" name="story[age]" />
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="personCountry" className="col-sm-2 control-label">Country</label>
             <div className="col-sm-10">
-              <select onChange={this.inputChange} className="form-control" id="personCountry" name="person[country]">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <select onChange={this.inputChange} className="form-control" id="personCountry" name="story[country]">
+                <option>-- Choose from the list</option>
+                {this.state.countries.map(function(item) {
+                  return (
+                    <option key={item.id} value={item.id}>{item.title}</option>
+                  )
+                }.bind(this))}
               </select>
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="personDescription" className="col-sm-2 control-label">Description</label>
             <div className="col-sm-10">
-              <textarea onChange={this.inputChange} className="form-control" id="personDescription" name="person[description]" rows="10" />
+              <textarea onChange={this.inputChange} className="form-control" id="personDescription" name="story[description]" rows="10" />
             </div>
           </div>
         </form>
