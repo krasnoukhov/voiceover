@@ -14,6 +14,7 @@ var NewStory = React.createClass({
 
   onPhotosUpdate: function() {
     this.updateDestination();
+
     $("section ul").sortable({
       connectWith: "section ul",
       start: function(evt, ui) {
@@ -34,7 +35,7 @@ var NewStory = React.createClass({
   },
 
   updateDestination: function() {
-    $(".destination").css("minHeight", $(".grid:first").outerHeight());
+    $(".destination").css("minHeight", $(".source .grid").outerHeight() || "");
   },
 
   stepForward: function() {
@@ -69,6 +70,8 @@ var NewStory = React.createClass({
     $("section ul").sortable({
       connectWith: "section ul"
     }).disableSelection();
+
+    this.updateDestination();
   },
 
   render: function() {
@@ -127,7 +130,7 @@ var NewStory = React.createClass({
       )
     } else {
       leftContent = (
-        <PhotosIndex classNames="col-md-12" onUpdate={this.onPhotosUpdate} />
+        <PhotosIndex classNames="col-md-12 source" onUpdate={this.onPhotosUpdate} />
       )
     }
 
