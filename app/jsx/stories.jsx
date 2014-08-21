@@ -71,30 +71,39 @@ var NewStory = React.createClass({
       connectWith: "section ul"
     }).disableSelection();
 
+    // Temporary hide source photos
+    if(this.state.step >= 1) {
+      $(".source").hide();
+    } else {
+      $(".source").show();
+    }
+
     this.updateDestination();
   },
 
   render: function() {
     var nextButton;
     if(this.state.items.length > 0) {
-      var classNames = "btn btn-primary add-story";
+      var classNames = "btn btn-default add-story";
       var buttonText = "Next";
+      var handler = this.stepForward;
 
       if(this.state.step == 1) {
-        classNames += " disabled";
-        buttonText = "Add story";
+        handler = this.stepBack;
+        buttonText = "Go back";
       }else if(this.state.step == 2) {
+        classNames += " btn-primary";
         buttonText = "Add story";
       }
 
       nextButton = (
-        <button className={classNames} onClick={this.stepForward}>{buttonText}</button>
+        <button className={classNames} onClick={handler}>{buttonText}</button>
       )
     }
 
-    var leftContent;
+    var formContent;
     if(this.state.step >= 1) {
-      leftContent = (
+      formContent = (
         <form className="form-horizontal" role="form">
           <div className="form-group">
             <label htmlFor="personName" className="col-sm-2 control-label">Email</label>
@@ -128,10 +137,6 @@ var NewStory = React.createClass({
           </div>
         </form>
       )
-    } else {
-      leftContent = (
-        <PhotosIndex classNames="col-md-12 source" onUpdate={this.onPhotosUpdate} />
-      )
     }
 
     return (
@@ -139,7 +144,8 @@ var NewStory = React.createClass({
         {nextButton}
 
         <div className="col-xs-6">
-          {leftContent}
+          {formContent}
+          <PhotosIndex classNames="col-md-12 source" onUpdate={this.onPhotosUpdate} />
         </div>
 
         <div className="col-xs-6">
