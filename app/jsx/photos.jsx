@@ -94,6 +94,11 @@ var PhotoWidget = React.createClass({
   },
 
   click: function() {
+    // Can't do
+    if ($(".photos:visible").length == 0) {
+      return false;
+    }
+
     $(".photos .close").removeClass("hidden").bind("click", this.hideFotorama);
     $(".fotorama").show().fotorama({
       width: "100%",
