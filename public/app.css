@@ -104,11 +104,12 @@ section.photos .close span {
   font-size: 24px;
 }
 
-section.stories aside {
-  text-align: center;
+section.stories aside .links, section.story aside .links {
+  margin: 30px 0;
+  text-align: left;
 }
 
-section.stories aside .links h2 {
+section.stories aside .links h2, section.story aside .links h2 {
   font-size: 20px;
 }
 

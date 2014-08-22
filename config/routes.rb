@@ -8,5 +8,5 @@ namespace "api" do
   resources "photos", only: [:index]
   get "/countries/counts", to: "countries#counts"
   resources "countries", only: [:index, :show]
-  resources "stories", only: [:create]
+  resources "stories", only: [:create, :show]
 end

@@ -244,10 +244,54 @@ var NewStory = React.createClass({
 });
 
 var StoryShow = React.createClass({
+  getInitialState: function () {
+    return { loaded: false, item: {}, country: {}, photos: [] };
+  },
+
+  componentDidMount: function () {
+    $.ajax({
+      url: "/api/stories/" + this.props.params.id,
+      dataType: "json",
+      success: function(data) {
+        this.setState({
+          loaded: true,
+          item: data.story,
+          country: data.country,
+          photos: data.photos
+        })
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("XHR failed")
+      }.bind(this)
+    })
+  },
+
   render: function() {
     return (
-      <section className="col-md-9 story">
-        STORY
+      <section className="row story">
+        <Loader loaded={this.state.loaded} color="#fff">
+          <aside className="col-md-3">
+            <h2>{this.state.item.name}</h2>
+            <p>{this.state.country.title}, {this.state.item.age} years</p>
+            <p>{this.state.item.description}</p>
+            <div className="links">
+              <h2><Link to="stories" id={this.state.country.id}>Go back</Link></h2>
+            </div>
+          </aside>
+
+          <section className="col-md-9 photos">
+            <ul className="list-unstyled row grid">
+            {this.state.photos.map(function(item) {
+              return (
+                <li key={item.id} className="col-sm-4 col-md-4 col-lg-3">
+                  <PhotoWidget type="thumbnail" item={item} />
+                </li>
+              )
+            }.bind(this))}
+            </ul>
+            <FotoramaWidget items={this.state.photos} />
+          </section>
+        </Loader>
       </section>
     );
   }
