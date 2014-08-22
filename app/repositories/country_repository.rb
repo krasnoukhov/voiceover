@@ -16,4 +16,14 @@ class VoiceOver::CountryRepository
   def self.all
     @@all
   end
+
+  def self.all_with_counts
+    counts = DB[:stories].group_and_count(:country).to_a
+    counts.map do |item|
+      {
+        "country" => all.find { |x| x.id == item[:country] },
+        "count" => item[:count],
+      }
+    end
+  end
 end

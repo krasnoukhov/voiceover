@@ -46,7 +46,7 @@ var Home = React.createClass({
       });
 
       google.maps.event.addListener(marker, "click", function() {
-        Router.transitionTo("country", { "id": item.country.id })
+        Router.transitionTo("country", { id: item.country.id })
       });
 
       item.marker = marker;

@@ -14,15 +14,24 @@ module VoiceOver::Controllers::Countries
     include Lotus::Action
 
     def call(params)
-      counts = VoiceOver::StoryRepository.countries_with_counts
-      countries = VoiceOver::CountryRepository.all
+      self.format = :json
+      self.body = Oj.dump(VoiceOver::CountryRepository.all_with_counts)
+    end
+  end
 
-      response = counts.map do |item|
-        {
-          "country" => countries.find { |x| x.id == item[:country] },
-          "count" => item[:count],
-        }
-      end
+  class Show
+    include Lotus::Action
+
+    def call(params)
+      country = VoiceOver::CountryRepository.all.find { |x| x.id == params[:id] }
+      stories = VoiceOver::StoryRepository.by_country(country.id)
+
+      response = {
+        "country" => country,
+        "count" => stories.count,
+        "stories" => stories,
+        "photos" => VoiceOver::PhotoRepository.all_as_hash,
+      }
 
       self.format = :json
       self.body = Oj.dump(response)

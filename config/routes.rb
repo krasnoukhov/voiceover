@@ -7,6 +7,6 @@ get "/stories/:id",   to: "home#index"
 namespace "api" do
   resources "photos", only: [:index]
   get "/countries/counts", to: "countries#counts"
-  resources "countries", only: [:index]
+  resources "countries", only: [:index, :show]
   resources "stories", only: [:create]
 end

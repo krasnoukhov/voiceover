@@ -2,10 +2,62 @@
 var PHOTOS_LIMIT = 36;
 
 var StoriesIndex = React.createClass({
+  getInitialState: function () {
+    return { loaded: false, country: {}, count: 0, items: [], photos: {} };
+  },
+
+  componentDidMount: function () {
+    $.ajax({
+      url: "/api/countries/" + this.props.params.id,
+      dataType: "json",
+      success: function(data) {
+        this.setState({
+          loaded: true,
+          country: data.country,
+          count: data.count,
+          items: data.stories,
+          photos: data.photos
+        })
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("XHR failed")
+      }.bind(this)
+    })
+  },
+
   render: function() {
     return (
-      <div>COUNTRY</div>
-    )
+      <section className="row stories">
+        <Loader loaded={this.state.loaded} color="#fff">
+          <aside className="col-md-3">
+            <h2>{this.state.country.title}</h2>
+            <p>{this.state.count} {this.state.count == 1 ? "story" : "stories"}</p>
+            <div className="links">
+              <h2><Link to="app">Go back</Link></h2>
+            </div>
+          </aside>
+
+          <section className="col-md-9">
+            <ul className="list-unstyled row grid">
+            {this.state.items.map(function(item) {
+              var photo_ids = item.photo_ids.split(",")
+              var photo = this.state.photos[photo_ids[0]]
+              var style = {
+                "background-image": "url(/static/thumbnail/" + photo.basename + ")"
+              };
+
+              return (
+                <li key={item.id} className="col-sm-4 col-md-4 col-lg-3">
+                  <Link to="story" id={item.id}><div style={style}>-</div></Link>
+                  <p className="text-muted">{item.name}, {item.age} years</p>
+                </li>
+              )
+            }.bind(this))}
+            </ul>
+          </section>
+        </Loader>
+      </section>
+    );
   }
 });
 
@@ -31,7 +83,7 @@ var NewStory = React.createClass({
         $(".destination").addClass("ready");
       }.bind(this),
       stop: function(evt, ui) {
-        this.setState({ "items": this.destinationItems() })
+        this.setState({ items: this.destinationItems() })
         if(this.state.items.length > PHOTOS_LIMIT) {
           return false;
         }
@@ -65,7 +117,7 @@ var NewStory = React.createClass({
       method: "POST",
       data: $("form").serialize() + "&story[photo_ids]=" + this.destinationItems().join(","),
       success: function(data) {
-        Router.transitionTo("story", { "id": data.id })
+        Router.transitionTo("story", { id: data.id })
       }.bind(this),
       error: function(xhr, status, err) {
         console.error("XHR failed")

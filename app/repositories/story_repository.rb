@@ -1,7 +1,9 @@
 class VoiceOver::StoryRepository
   include Lotus::Repository
 
-  def self.countries_with_counts
-    DB[:stories].group_and_count(:country).to_a
+  def self.by_country(country_id)
+    query do
+      where(country: country_id)
+    end.all
   end
 end
