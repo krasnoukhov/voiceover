@@ -30,7 +30,8 @@ var Home = React.createClass({
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(item.country.lat, item.country.lng),
         map: map,
-        icon: "//maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        icon: "//maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        animation: google.maps.Animation.DROP
       });
 
       var infowindow = new google.maps.InfoWindow({
