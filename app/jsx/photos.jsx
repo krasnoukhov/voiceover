@@ -103,8 +103,7 @@ var PhotoWidget = React.createClass({
     $(".fotorama").show().fotorama({
       width: "100%",
       height: "100%",
-      nav: "thumbs",
-      keyboard: true
+      nav: "thumbs"
     });
     $(".fotorama").data("fotorama").show(this.id());
     $(document).bind("keydown", this.keydown);
@@ -113,6 +112,10 @@ var PhotoWidget = React.createClass({
   keydown: function(evt) {
     if(evt.keyCode == 27) {
       this.hideFotorama();
+    }else if(evt.keyCode == 37) {
+      $(".fotorama").data("fotorama").show("<");
+    }else if(evt.keyCode == 39) {
+      $(".fotorama").data("fotorama").show(">");
     }
   },
 
