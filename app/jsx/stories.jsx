@@ -1,6 +1,14 @@
 /** @jsx React.DOM */
 var PHOTOS_LIMIT = 36;
 
+var StoriesIndex = React.createClass({
+  render: function() {
+    return (
+      <div>COUNTRY</div>
+    )
+  }
+});
+
 var NewStory = React.createClass({
   getInitialState: function () {
     return { step: 0, items: [], countries: [] };

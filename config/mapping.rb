@@ -14,7 +14,7 @@ mapper = Lotus::Model::Mapper.new do
     entity VoiceOver::Story
 
     attribute :id,          Integer
-    attribute :name,       String
+    attribute :name,        String
     attribute :age,         Integer
     attribute :country,     String
     attribute :description, String
@@ -22,6 +22,7 @@ mapper = Lotus::Model::Mapper.new do
   end
 end.load!
 
+DB = Sequel.connect(VoiceOver::DATABASE)
 adapter = Lotus::Model::Adapters::SqlAdapter.new(mapper, VoiceOver::DATABASE)
 VoiceOver::PhotoRepository.adapter = adapter
 VoiceOver::StoryRepository.adapter = adapter

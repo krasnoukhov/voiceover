@@ -1,8 +1,6 @@
 namespace :db do
   desc "Setup database"
   task setup: :environment do
-    DB = Sequel.connect(VoiceOver::DATABASE)
-
     DB.create_table :photos do
       primary_key :id
       String      :basename

@@ -1,6 +1,6 @@
 bundle
 coverage
-db
+db/voiceover.db
 log
 public/js
 public/static

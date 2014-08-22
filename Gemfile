@@ -4,6 +4,7 @@ ruby "2.1.2"
 gem "puma", "~> 2.9"
 
 gem "lotusrb", github: "lotus/lotus"
+gem "lotus-router", github: "lotus/router"
 gem "lotus-model", github: "lotus/model"
 gem "sqlite3", "~> 1.3"
 gem "rake", "~> 10.3"
