@@ -280,6 +280,7 @@ var StoryShow = React.createClass({
           </aside>
 
           <section className="col-md-9 photos">
+            <button type="button" className="hidden close"><span aria-hidden="true">{'\u00d7'}</span><span className="sr-only">Close</span></button>
             <ul className="list-unstyled row grid">
             {this.state.photos.map(function(item) {
               return (
