@@ -27,10 +27,17 @@ var Home = React.createClass({
     });
 
     this.state.items.forEach(function(item) {
+      var icon = {
+        url: "//maps.google.com/mapfiles/kml/paddle/wht-blank.png",
+        scaledSize: new google.maps.Size(32, 32),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 0)
+      };
+
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(item.country.lat, item.country.lng),
         map: map,
-        icon: "//maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        icon: icon,
         animation: google.maps.Animation.DROP
       });
 

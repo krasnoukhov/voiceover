@@ -101,6 +101,21 @@ section .fotorama .fotorama__html > div {
 
 section.home .map {
   padding-bottom: 55%;
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: url(grayscale.svg); /* Firefox 4+ */
+  filter: gray; /* IE 6-9 */
+}
+
+section.home .map canvas {
+  -webkit-filter: grayscale(0%);
+  -moz-filter: none;
+  -ms-filter: none;
+  -o-filter: none;
+  filter: none;
 }
 
 section.photos {
