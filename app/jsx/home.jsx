@@ -23,7 +23,7 @@ var Home = React.createClass({
     var map = new google.maps.Map($(".home .map")[0], {
       zoom: 2,
       center: new google.maps.LatLng(30, 10),
-      mapTypeId: google.maps.MapTypeId.HYBRID
+      mapTypeId: google.maps.MapTypeId.SATELLITE
     });
 
     this.state.items.forEach(function(item) {
@@ -42,7 +42,7 @@ var Home = React.createClass({
       });
 
       var infowindow = new google.maps.InfoWindow({
-        content: "See " + item.count + " " + (item.count == 1 ? "story" : "stories") + " from " + item.country.title
+        content: "See " + item.count + " " + (item.count == 1 ? "story" : "stories")
       });
 
       google.maps.event.addListener(marker, "mouseover", function() {
