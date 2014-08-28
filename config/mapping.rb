@@ -6,8 +6,9 @@ mapper = Lotus::Model::Mapper.new do
     entity VoiceOver::Photo
 
     attribute :id,          Integer
-    attribute :title,       String
     attribute :basename,    String
+    attribute :location,    String
+    attribute :year,        Integer
   end
 
   collection :stories do

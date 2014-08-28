@@ -1,5 +1,6 @@
 APP_ENV = ENV["LOTUS_ENV"] || "development"
 
+require "csv"
 require "bundler/setup"
 Bundler.require(:default, APP_ENV)
 

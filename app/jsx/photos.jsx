@@ -55,7 +55,7 @@ var PhotosWidget = React.createClass({
           return (
             <li key={item.id} className="col-sm-4 col-md-4 col-lg-3">
               <PhotoWidget type="thumbnail" item={item} />
-              <p className="text-muted">{item.title}</p>
+              <p className="text-muted">{item.location}, {item.year}</p>
             </li>
           )
         }.bind(this))}
