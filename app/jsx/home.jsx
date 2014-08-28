@@ -23,7 +23,8 @@ var Home = React.createClass({
     var map = new google.maps.Map($(".home .map")[0], {
       zoom: 2,
       center: new google.maps.LatLng(30, 10),
-      mapTypeId: google.maps.MapTypeId.SATELLITE
+      mapTypeId: google.maps.MapTypeId.SATELLITE,
+      disableDefaultUI: true
     });
 
     this.state.items.forEach(function(item) {
