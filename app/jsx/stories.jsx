@@ -128,13 +128,11 @@ var NewStory = React.createClass({
   },
 
   inputChange: function() {
-    var formFilled = $("form").serializeArray().map(function(x) {
-      return x["value"] == "";
-    }).indexOf(true) === -1;
+    var formValid = $(".js-story-form").data("bootstrapValidator").isValid() && $("#storyTerms").is(":checked");
 
-    if(formFilled && this.state.step == 1) {
+    if(formValid && this.state.step == 1) {
       this.stepForward();
-    }else if(!formFilled && this.state.step == 2) {
+    }else if(!formValid && this.state.step == 2) {
       this.stepBack();
     }
   },
@@ -165,48 +163,88 @@ var NewStory = React.createClass({
     }
 
     this.updateDestination();
+
+    // Form
+    $(".js-story-form").bootstrapValidator({
+      feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+        "story[name]": {
+          validators: {
+            notEmpty: {}
+          }
+        },
+        "story[age]": {
+          validators: {
+            notEmpty: {},
+            regexp: {
+              regexp: /^[0-9]+$/,
+            }
+          }
+        },
+        "story[country]": {
+          validators: {
+            notEmpty: {}
+          }
+        },
+        "story[description]": {
+          validators: {
+            notEmpty: {}
+          }
+        },
+        "story[email]": {
+          validators: {
+            notEmpty: {
+              message: 'The email address is required and cannot be empty'
+            },
+            emailAddress: {
+              message: 'The email address is not valid'
+            }
+          }
+        }
+      }
+    });
   },
 
   render: function() {
-    var nextButton;
-    if(this.state.items.length > 0) {
-      var classNames = "btn btn-default add-story";
-      var buttonText = "Next";
-      var handler = this.stepForward;
-
+    var headerButton;
+    if(this.state.items.length > 0 && this.state.step < 2) {
       if(this.state.step == 1) {
-        handler = this.stepBack;
-        buttonText = "Go back";
-      }else if(this.state.step == 2) {
-        classNames += " btn-primary";
-        buttonText = "Add story";
+        var handler = this.stepBack;
+        var buttonText = "Go back";
+      } else {
+        var handler = this.stepForward;
+        var buttonText = "Next";
       }
 
-      nextButton = (
-        <button className={classNames} onClick={handler}>{buttonText}</button>
+      headerButton = (
+        <button onClick={handler} className="btn btn-default btn-header">{buttonText}</button>
       )
     }
 
     var formContent;
     if(this.state.step >= 1) {
       formContent = (
-        <form className="form-horizontal" role="form">
+        <form className="form-horizontal js-story-form" role="form">
           <div className="form-group">
-            <label htmlFor="personName" className="col-sm-2 control-label">Name</label>
+            <label htmlFor="storyName" className="col-sm-2 control-label">Name</label>
             <div className="col-sm-10">
-              <input onChange={this.inputChange} type="text" className="form-control" id="personName" name="story[name]" />
+              <input onChange={this.inputChange} type="text" className="form-control" id="storyName" name="story[name]" />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="personAge" className="col-sm-2 control-label">Age</label>
+            <label htmlFor="storyAge" className="col-sm-2 control-label">Age</label>
             <div className="col-sm-10">
-              <input onChange={this.inputChange} type="number" className="form-control" id="personAge" name="story[age]" />
+              <input onChange={this.inputChange} type="number" className="form-control" id="storyAge" name="story[age]" />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="personCountry" className="col-sm-2 control-label">Country</label>
+            <label htmlFor="storyCountry" className="col-sm-2 control-label">Country</label>
             <div className="col-sm-10">
-              <select onChange={this.inputChange} className="form-control" id="personCountry" name="story[country]">
+              <select onChange={this.inputChange} className="form-control" id="storyCountry" name="story[country]">
                 <option>-- Choose from the list</option>
                 {this.state.countries.map(function(item) {
                   return (
@@ -217,9 +255,29 @@ var NewStory = React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="personDescription" className="col-sm-2 control-label">Description</label>
+            <label htmlFor="storyDescription" className="col-sm-2 control-label">Description</label>
             <div className="col-sm-10">
-              <textarea onChange={this.inputChange} className="form-control" id="personDescription" name="story[description]" rows="10" />
+              <textarea onChange={this.inputChange} className="form-control" id="storyDescription" name="story[description]" rows="10" />
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="storyEmail" className="col-sm-2 control-label">Email</label>
+            <div className="col-sm-10">
+              <input onChange={this.inputChange} type="email" className="form-control" id="storyEmail" name="story[email]" placeholder="Stay in touch" />
+            </div>
+          </div>
+          <div className="form-group checkbox clearfix">
+            <div className="col-sm-offset-2 col-sm-10">
+              <label htmlFor="storyTerms">
+                <input onChange={this.inputChange} type="checkbox" id="storyTerms" />
+                <small>I voluntarily participated in the Voice-Over art project. I understand that the content of my submission will be publicly visible on the voiceoverproject.org website and may be used as part of the future installations and publications within the conceptual framework of this project in the future such as book publications, exhibition catalogs or traveling exhibitions without the compromise of my personal information.</small>
+              </label>
+            </div>
+          </div>
+          <br />
+          <div className="form-group">
+            <div className="col-sm-offset-2 col-sm-10">
+              <button onClick={this.stepForward} className="form-control btn btn-big btn-primary" disabled={this.state.step != 2}>Add story</button>
             </div>
           </div>
         </form>
@@ -228,7 +286,7 @@ var NewStory = React.createClass({
 
     return (
       <section className="row new-story">
-        {nextButton}
+        {headerButton}
 
         <div className="col-xs-6">
           {formContent}

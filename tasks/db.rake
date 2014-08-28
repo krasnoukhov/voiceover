@@ -23,6 +23,7 @@ namespace :db do
       Integer     :age
       String      :country
       String      :description
+      String      :email
       String      :photo_ids
     end
   end

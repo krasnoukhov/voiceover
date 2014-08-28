@@ -19,6 +19,7 @@ mapper = Lotus::Model::Mapper.new do
     attribute :age,         Integer
     attribute :country,     String
     attribute :description, String
+    attribute :email,       String
     attribute :photo_ids,   String
   end
 end.load!

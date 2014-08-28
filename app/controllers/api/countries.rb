@@ -29,7 +29,7 @@ module VoiceOver::Controllers::Countries
       response = {
         "country" => country,
         "count" => stories.count,
-        "stories" => stories,
+        "stories" => stories.map(&:serializable_hash),
         "photos" => VoiceOver::PhotoRepository.all_as_hash,
       }
 

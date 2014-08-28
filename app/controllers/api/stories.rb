@@ -22,7 +22,7 @@ module VoiceOver::Controllers::Stories
       photos = VoiceOver::PhotoRepository.all_as_hash
 
       response = {
-        "story" => story,
+        "story" => story.serializable_hash,
         "country" => country,
         "photos" => story.photo_ids.split(",").map { |id| photos[id] },
       }
