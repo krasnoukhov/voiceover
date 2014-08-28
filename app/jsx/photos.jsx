@@ -133,9 +133,10 @@ var PhotoWidget = React.createClass({
     var style = {
       "background-image": "url(/static/" + this.props.type + "/" + this.props.item.basename + ")"
     };
+    var title = this.props.item.location + ", " + this.props.item.year;
 
     return (
-      <div style={style} id={this.id()} data-photoid={this.props.item.id} data-thumb={thumb} onClick={this.click}>-</div>
+      <div style={style} id={this.id()} data-photoid={this.props.item.id} data-thumb={thumb} onClick={this.click} title={title}>-</div>
     );
   }
 });
