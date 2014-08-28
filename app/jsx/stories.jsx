@@ -29,6 +29,7 @@ var StoriesIndex = React.createClass({
     return (
       <section className="row stories">
         <Loader loaded={this.state.loaded} color="#fff">
+          {/*
           <aside className="col-md-3">
             <h2>{this.state.country.title}</h2>
             <p>{this.state.count} {this.state.count == 1 ? "story" : "stories"}</p>
@@ -36,8 +37,9 @@ var StoriesIndex = React.createClass({
               <h2><Link to="app">Go back</Link></h2>
             </div>
           </aside>
+          */}
 
-          <section className="col-md-9">
+          <section className="col-md-12">
             <ul className="list-unstyled row grid">
             {this.state.items.map(function(item) {
               var photo_ids = item.photo_ids.split(",")
