@@ -47,11 +47,16 @@ var StoriesIndex = React.createClass({
               var style = {
                 "background-image": "url(/static/thumbnail/" + photo.basename + ")"
               };
+              var title = "";
+              if(item.name) {
+                title += item.name + ", "
+              }
+              title += item.age + " years";
 
               return (
                 <li key={item.id} className="col-sm-4 col-md-4 col-lg-3">
                   <Link to="story" id={item.id}><div style={style}>-</div></Link>
-                  <p className="text-muted">{item.name}, {item.age} years</p>
+                  <p className="text-muted">{title}</p>
                 </li>
               )
             }.bind(this))}
@@ -128,7 +133,8 @@ var NewStory = React.createClass({
   },
 
   inputChange: function() {
-    var formValid = $(".js-story-form").data("bootstrapValidator").isValid() && $("#storyTerms").is(":checked");
+    var formValid = $(".js-story-form").data("bootstrapValidator").getInvalidFields().length == 0
+    formValid = formValid && $("#storyTerms").is(":checked");
 
     if(formValid && this.state.step == 1) {
       this.stepForward();
@@ -172,11 +178,6 @@ var NewStory = React.createClass({
         validating: 'glyphicon glyphicon-refresh'
       },
       fields: {
-        "story[name]": {
-          validators: {
-            notEmpty: {}
-          }
-        },
         "story[age]": {
           validators: {
             notEmpty: {},
@@ -193,16 +194,6 @@ var NewStory = React.createClass({
         "story[description]": {
           validators: {
             notEmpty: {}
-          }
-        },
-        "story[email]": {
-          validators: {
-            notEmpty: {
-              message: 'The email address is required and cannot be empty'
-            },
-            emailAddress: {
-              message: 'The email address is not valid'
-            }
           }
         }
       }
@@ -221,7 +212,7 @@ var NewStory = React.createClass({
       }
 
       headerButton = (
-        <button onClick={handler} className="btn btn-default btn-header">{buttonText}</button>
+        <button onClick={handler} className="btn btn-primary btn-header">{buttonText}</button>
       )
     }
 
@@ -229,12 +220,6 @@ var NewStory = React.createClass({
     if(this.state.step >= 1) {
       formContent = (
         <form className="form-horizontal js-story-form" role="form">
-          <div className="form-group">
-            <label htmlFor="storyName" className="col-sm-2 control-label">Name</label>
-            <div className="col-sm-10">
-              <input onChange={this.inputChange} type="text" className="form-control" id="storyName" name="story[name]" />
-            </div>
-          </div>
           <div className="form-group">
             <label htmlFor="storyAge" className="col-sm-2 control-label">Age</label>
             <div className="col-sm-10">
@@ -261,16 +246,22 @@ var NewStory = React.createClass({
             </div>
           </div>
           <div className="form-group">
+            <label htmlFor="storyName" className="col-sm-2 control-label">Name</label>
+            <div className="col-sm-10">
+              <input onChange={this.inputChange} type="text" className="form-control" id="storyName" name="story[name]" placeholder="Optional: stay in touch" />
+            </div>
+          </div>
+          <div className="form-group">
             <label htmlFor="storyEmail" className="col-sm-2 control-label">Email</label>
             <div className="col-sm-10">
-              <input onChange={this.inputChange} type="email" className="form-control" id="storyEmail" name="story[email]" placeholder="Stay in touch" />
+              <input onChange={this.inputChange} type="email" className="form-control" id="storyEmail" name="story[email]" placeholder="Optional: stay in touch" />
             </div>
           </div>
           <div className="form-group checkbox clearfix">
             <div className="col-sm-offset-2 col-sm-10">
               <label htmlFor="storyTerms">
                 <input onChange={this.inputChange} type="checkbox" id="storyTerms" />
-                <small>I voluntarily participated in the Voice-Over art project. I understand that the content of my submission will be publicly visible on the voiceoverproject.org website and may be used as part of the future installations and publications within the conceptual framework of this project in the future such as book publications, exhibition catalogs or traveling exhibitions without the compromise of my personal information.</small>
+                <small>I voluntarily participated in the Voice-Over art project. I understand that the content of my submission will be publicly visible on the voiceoverproject.org website and may be used as part of installations and publications within the conceptual framework of this project in the future such as book publications, exhibition catalogs or traveling exhibitions without compromise of my personal information.</small>
               </label>
             </div>
           </div>
@@ -295,7 +286,11 @@ var NewStory = React.createClass({
 
         <div className="col-xs-6">
           <ul className="list-unstyled row grid destination">
-            <li className="sample"><h2>Choose the order of photos by dragging and dropping here</h2></li>
+            <li className="sample">
+              <h3>Choose the order of photos by dragging and dropping here</h3>
+              <p>Here, add your selection of images (min. 1 – max. 36) to create your own story and then press <strong>Next</strong> on the top right of the page.</p>
+              <p>Once done, on the next page, you will be sent to a form where we ask you to put in basic information about yourself and include a text about your selection of images.</p>
+            </li>
           </ul>
         </div>
       </section>
@@ -331,7 +326,7 @@ var StoryShow = React.createClass({
       <section className="row story">
         <Loader loaded={this.state.loaded} color="#fff">
           <aside className="col-md-3">
-            <h2>{this.state.item.name}</h2>
+            {this.state.item.name ? "<h2>{this.state.item.name}</h2>" : ""}
             <p>{this.state.country.title}, {this.state.item.age} years</p>
             <p>{this.state.item.description}</p>
             <div className="links">

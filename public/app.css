@@ -161,17 +161,11 @@ section.new-story .grid li div {
   margin: 0 5px;
 }
 
-section.new-story .grid li.sample {
-  text-align: center;
+section.new-story .grid li.sample p strong {
+  color: #fff;
 }
 
-section.new-story .grid li.sample h2 {
-  margin: 0;
-  font-size: 20px;
-  font-family: 'Oswald', sans-serif;
-}
-
-section.new-story .grid li p {
+section.new-story .grid li p.text-muted {
   display: none;
 }
 

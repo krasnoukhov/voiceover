@@ -19,10 +19,10 @@ namespace :db do
 
     DB.create_table :stories do
       primary_key :id
-      String      :name
       Integer     :age
       String      :country
       String      :description
+      String      :name
       String      :email
       String      :photo_ids
     end

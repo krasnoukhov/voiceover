@@ -15,10 +15,10 @@ mapper = Lotus::Model::Mapper.new do
     entity VoiceOver::Story
 
     attribute :id,          Integer
-    attribute :name,        String
     attribute :age,         Integer
     attribute :country,     String
     attribute :description, String
+    attribute :name,        String
     attribute :email,       String
     attribute :photo_ids,   String
   end
