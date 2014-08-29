@@ -133,13 +133,18 @@ var NewStory = React.createClass({
   },
 
   inputChange: function() {
-    var formValid = $(".js-story-form").data("bootstrapValidator").getInvalidFields().length == 0 && $("#storyTerms").is(":checked");
+    var formValid = $(".js-story-form").data("bootstrapValidator").isValid() && $("#storyTerms").is(":checked");
 
     if(formValid && this.state.step == 1) {
       this.stepForward();
     }else if(!formValid && this.state.step == 2) {
       this.stepBack();
     }
+  },
+
+  termsChange: function() {
+    $(".js-story-form").data("bootstrapValidator").validate();
+    this.inputChange();
   },
 
   componentDidMount: function () {
@@ -170,33 +175,56 @@ var NewStory = React.createClass({
     this.updateDestination();
 
     // Form
-    $(".js-story-form").bootstrapValidator({
-      feedbackIcons: {
-        valid: 'glyphicon glyphicon-ok',
-        invalid: 'glyphicon glyphicon-remove',
-        validating: 'glyphicon glyphicon-refresh'
-      },
-      fields: {
-        "story[age]": {
-          validators: {
-            notEmpty: {},
-            regexp: {
-              regexp: /^[0-9]+$/,
+    if($(".js-story-form").length) {
+      $(".js-story-form").bootstrapValidator({
+        feedbackIcons: {
+          valid: 'glyphicon glyphicon-ok',
+          invalid: 'glyphicon glyphicon-remove',
+          validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+          "story[age]": {
+            validators: {
+              notEmpty: {},
+              regexp: {
+                regexp: /^[0-9]+$/,
+              }
+            }
+          },
+          "story[country]": {
+            validators: {
+              notEmpty: {},
+              stringLength: {
+                min: 2,
+                max: 2,
+                message: "Please choose country"
+              }
+            }
+          },
+          "story[description]": {
+            validators: {
+              notEmpty: {},
+              stringLength: {
+                max: 65000
+              }
+            }
+          },
+          "story[name]": {
+            validators: {
+              stringLength: {
+                max: 30
+              }
+            }
+          },
+          "story[email]": {
+            validators: {
+              emailAddress: {
+              }
             }
           }
-        },
-        "story[country]": {
-          validators: {
-            notEmpty: {}
-          }
-        },
-        "story[description]": {
-          validators: {
-            notEmpty: {}
-          }
         }
-      }
-    });
+      });
+    }
   },
 
   render: function() {
@@ -259,7 +287,7 @@ var NewStory = React.createClass({
           <div className="form-group checkbox clearfix">
             <div className="col-sm-offset-2 col-sm-10">
               <label htmlFor="storyTerms">
-                <input onChange={this.inputChange} type="checkbox" id="storyTerms" />
+                <input onChange={this.termsChange} type="checkbox" id="storyTerms" />
                 <small>I voluntarily participated in the Voice-Over art project. I understand that the content of my submission will be publicly visible on the voiceoverproject.org website and may be used as part of installations and publications within the conceptual framework of this project in the future such as book publications, exhibition catalogs or traveling exhibitions without compromise of my personal information.</small>
               </label>
             </div>
