@@ -133,8 +133,7 @@ var NewStory = React.createClass({
   },
 
   inputChange: function() {
-    var formValid = $(".js-story-form").data("bootstrapValidator").getInvalidFields().length == 0
-    formValid = formValid && $("#storyTerms").is(":checked");
+    var formValid = $(".js-story-form").data("bootstrapValidator").getInvalidFields().length == 0 && $("#storyTerms").is(":checked");
 
     if(formValid && this.state.step == 1) {
       this.stepForward();
