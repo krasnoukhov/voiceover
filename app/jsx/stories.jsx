@@ -11,13 +11,17 @@ var StoriesIndex = React.createClass({
       url: "/api/countries/" + this.props.params.id,
       dataType: "json",
       success: function(data) {
-        this.setState({
-          loaded: true,
-          country: data.country,
-          count: data.count,
-          items: data.stories,
-          photos: data.photos
-        })
+        if(data.stories.length === 1) {
+          Router.transitionTo("story", { id: data.stories[0].id })
+        }else{
+          this.setState({
+            loaded: true,
+            country: data.country,
+            count: data.count,
+            items: data.stories,
+            photos: data.photos
+          })
+        }
       }.bind(this),
       error: function(xhr, status, err) {
         console.error("XHR failed")
