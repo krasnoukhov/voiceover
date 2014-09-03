@@ -30,9 +30,7 @@ var Home = React.createClass({
     this.state.items.forEach(function(item) {
       var icon = {
         url: "//maps.google.com/mapfiles/kml/paddle/wht-blank.png",
-        scaledSize: new google.maps.Size(32, 32),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 0)
+        scaledSize: new google.maps.Size(32, 32)
       };
 
       var marker = new google.maps.Marker({
