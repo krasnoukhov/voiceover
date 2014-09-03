@@ -122,6 +122,8 @@ var NewStory = React.createClass({
   },
 
   lastStep: function() {
+    this.setState({ step: -1 });
+
     $.ajax({
       url: "/api/stories",
       dataType: "json",
@@ -233,7 +235,7 @@ var NewStory = React.createClass({
 
   render: function() {
     var headerButton;
-    if(this.state.items.length > 0 && this.state.step < 2) {
+    if(this.state.items.length > 0 && this.state.step >= 0 && this.state.step < 2) {
       if(this.state.step == 1) {
         var handler = this.stepBack;
         var buttonText = "Go back";
@@ -306,24 +308,27 @@ var NewStory = React.createClass({
       )
     }
 
+    var isLoaded = (this.state.step != -1);
     return (
       <section className="row new-story">
-        {headerButton}
+        <Loader loaded={isLoaded} color="#fff">
+          {headerButton}
 
-        <div className="col-xs-6">
-          {formContent}
-          <PhotosIndex classNames="col-md-12 source" onUpdate={this.onPhotosUpdate} />
-        </div>
+          <div className="col-xs-6">
+            {formContent}
+            <PhotosIndex classNames="col-md-12 source" onUpdate={this.onPhotosUpdate} />
+          </div>
 
-        <div className="col-xs-6">
-          <ul className="list-unstyled row grid destination">
-            <li className="sample">
-              <h3>Choose the order of photos by dragging and dropping here</h3>
-              <p>Here, add your selection of images (min. 1 – max. 36) to create your own story and then press <strong>Next</strong> on the top right of the page.</p>
-              <p>Once done, on the next page, you will be sent to a form where we ask you to put in basic information about yourself and include a text about your selection of images.</p>
-            </li>
-          </ul>
-        </div>
+          <div className="col-xs-6">
+            <ul className="list-unstyled row grid destination">
+              <li className="sample">
+                <h3>Choose the order of photos by dragging and dropping here</h3>
+                <p>Here, add your selection of images (min. 1 – max. 36) to create your own story and then press <strong>Next</strong> on the top right of the page.</p>
+                <p>Once done, on the next page, you will be sent to a form where we ask you to put in basic information about yourself and include a text about your selection of images.</p>
+              </li>
+            </ul>
+          </div>
+        </Loader>
       </section>
     );
   }
