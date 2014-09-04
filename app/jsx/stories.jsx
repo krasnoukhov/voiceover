@@ -358,11 +358,18 @@ var StoryShow = React.createClass({
   },
 
   render: function() {
+    var name = "";
+    if(this.state.item.name) {
+      name = (
+        <h2>{this.state.item.name}</h2>
+      )
+    }
+
     return (
       <section className="row story">
         <Loader loaded={this.state.loaded} color="#fff">
           <aside className="col-md-3">
-            {this.state.item.name ? "<h2>{this.state.item.name}</h2>" : ""}
+            {name}
             <p>{this.state.country.title}, {this.state.item.age} years</p>
             <p>{this.state.item.description}</p>
             <div className="links">
