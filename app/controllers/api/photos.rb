@@ -6,7 +6,7 @@ module VoiceOver::Controllers::Photos
 
     def call(params)
       self.format = :json
-      self.body = Oj.dump(VoiceOver::PhotoRepository.all)
+      self.body = Oj.dump(VoiceOver::PhotoRepository.all_ordered)
     end
   end
 end
