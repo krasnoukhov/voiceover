@@ -3,7 +3,7 @@ require "./app/entities/country"
 class VoiceOver::CountryRepository
   include Lotus::Repository
 
-  @@all = CSV.foreach("./db/countries.csv").map do |row|
+  @@all = CSV.foreach("./db/countries.csv", encoding: "UTF-8").map do |row|
     VoiceOver::Country.new(
       id: row[0],
       title: row[3],
